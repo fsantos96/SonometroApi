@@ -1,6 +1,11 @@
 const moment = require('moment');
-const devicesList = [],
-    dateFormat = "YYYY/MM/DD HH:mm";
+const dateFormat = "YYYY/MM/DD",
+devicesList = [{
+    id: "adad",
+    date: moment().format(dateFormat),
+    enabled: true,
+    depto: '4B'
+}];
 
 function deviceRegister(deviceId) {
     return new Promise((resolve, reject) => {
@@ -18,10 +23,25 @@ function deviceRegister(deviceId) {
     })
 }
 
+function getDeviceDataById(id) {
+    return devicesList.find(d => d.id == id);
+}
 
-function getAllDevice(data) {
+
+function getAllDevice(id) {
+
     return new Promise((resolve, reject) => {
-        resolve(devicesList);
+        if(id && id != 'undefined') {
+            const device = devicesList.find(d => d.id == id);
+            resolve({
+                devices: [device]
+            })
+        } else {
+
+            resolve({
+                devices: devicesList
+            });
+        }
     })
 }
 
@@ -36,7 +56,7 @@ function updateDevice(device) {
 
     return new Promise((resolve, reject) => {
         resolve({
-            devicesList: devicesList
+            devices: devicesList
         });
     })
 }
@@ -52,7 +72,7 @@ function deleteDevice(id) {
 
     return new Promise((resolve, reject) => {
         resolve({
-            devicesList: devicesList
+            devices: devicesList
         });
     })
 }
@@ -61,7 +81,8 @@ const service = {
     deviceRegister: deviceRegister,
     updateDevice: updateDevice,
     getAllDevice: getAllDevice,
-    deleteDevice: deleteDevice
+    deleteDevice: deleteDevice,
+    getDeviceDataById: getDeviceDataById
 }
 
 module.exports = service;

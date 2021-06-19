@@ -1,13 +1,4 @@
-const alertsList = [];
 const managerList = [];
-//alerta
-// {
-//     id
-//     startTime
-//     endTime
-// }
-
-
 
 function getListManagers() {
     return new Promise((resolve, reject) => {
@@ -17,33 +8,6 @@ function getListManagers() {
     })
 }
 
-function registerOrUpdateAlert(alertData) {
-    return new Promise((resolve, reject) => {
-        if(alertData.id) {
-            var alertIndex = alertsList.findIndex(a => a.id == alertData.id)
-            if(alertIndex !== -1) {
-                alertsList[alertIndex] = alertData;
-            }
-        } else {
-            alertsList.push({
-                ...alertData,
-                id: alertsList.length + 1
-            })
-        }
-
-        resolve({
-            alertsList: alertsList
-        });
-    })
-}
-
-function getAllAlerts() {
-    return new Promise((resolve, reject) => {
-        resolve({
-            alertsList: alertsList
-        });
-    })
-}
 
 function addOrUpdateManager(managerData) {
     return new Promise((resolve, reject) => {
@@ -55,8 +19,7 @@ function addOrUpdateManager(managerData) {
         } else {
             managerList.push({
                 id: managerList.length,
-                email: managerData.email,
-                enabled: true
+                email: managerData.email
             })
         }
     
@@ -78,10 +41,7 @@ function deleteManager(managerId) {
 const service = {
     getListManagers: getListManagers,
     addOrUpdateManager: addOrUpdateManager,
-    deleteManager: deleteManager,
-    getListManagers: getListManagers,
-    getAllAlerts: getAllAlerts,
-    registerOrUpdateAlert: registerOrUpdateAlert
+    deleteManager: deleteManager
 }
 
 module.exports = service;
